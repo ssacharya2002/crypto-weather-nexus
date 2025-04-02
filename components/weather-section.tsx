@@ -7,6 +7,7 @@ import { Star, Cloud, Droplets, Thermometer, AlertTriangle } from "lucide-react"
 import Link from "next/link"
 import { toggleFavoriteCity } from "@/redux/features/userPreferencesSlice"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { WeatherCardsSkeleton } from "./WeatherCardsSkeleton"
 
 export default function WeatherSection() {
   const { data, loading, error } = useAppSelector((state) => state.weather)
@@ -14,7 +15,7 @@ export default function WeatherSection() {
   const dispatch = useAppDispatch()
 
   if (loading) {
-    return <div className="text-center py-8">Loading weather data...</div>
+    return <WeatherCardsSkeleton />
   }
 
   if (error) {
