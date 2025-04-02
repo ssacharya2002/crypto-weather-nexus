@@ -25,8 +25,17 @@ const userPreferencesSlice = createSlice({
         state.favoriteCities.splice(index, 1)
       }
     },
+    toggleFavoriteCrypto: (state, action: PayloadAction<string>) => {
+      const crypto = action.payload
+      const index = state.favoriteCryptos.indexOf(crypto)
+      if (index === -1) {
+        state.favoriteCryptos.push(crypto)
+      } else {
+        state.favoriteCryptos.splice(index, 1)
+      }
+    },
   },
 })
 
-export const { toggleFavoriteCity } = userPreferencesSlice.actions
+export const { toggleFavoriteCity, toggleFavoriteCrypto } = userPreferencesSlice.actions
 export default userPreferencesSlice.reducer

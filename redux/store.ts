@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit"
 import weatherReducer from "./features/weatherSlice"
+import cryptoReducer from "./features/cryptoSlice"
 import userPreferencesReducer from "./features/userPreferencesSlice"
+import websocketReducer from "./features/websocketSlice"
 
 export const store = configureStore({
   reducer: {
     weather: weatherReducer,
-    userPreferences: userPreferencesReducer
+    crypto: cryptoReducer,
+    userPreferences: userPreferencesReducer,
+      websocket: websocketReducer,
   }
 })
 
