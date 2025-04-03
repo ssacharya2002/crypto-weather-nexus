@@ -20,10 +20,6 @@ export default function NewsSection() {
   const dispatch = useAppDispatch();
   const { data, loading, error } = useAppSelector((state) => state.news);
 
-  useEffect(() => {
-    dispatch(fetchNewsData());
-  }, [dispatch]);
-
   if (loading) {
     return (
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
