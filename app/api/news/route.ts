@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
     const data = await response.json()
 
     // Transform the API response to data format
-    const articles = data.results.slice(0, 5).map((article: any) => ({
+    const articles = data.results.slice(0, 6).map((article: any) => ({
       source: {
         id: article.source_id || null,
         name: article.source_name || "Unknown",
