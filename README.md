@@ -58,3 +58,4 @@ npm run dev
 
 - **API Rate Limiting:** Implemented caching strategies to avoid exceeding free tier limits
 - **WebSocket Reliability:** Added reconnection logic and status indicators
+- **Weather History Limitation:** Replaced historical weather data with 5-day forecast due to OpenWeatherMap's historical data requiring a paid plan
