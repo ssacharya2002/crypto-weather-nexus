@@ -6,8 +6,13 @@ import { useAppDispatch } from "@/redux/hooks";
 import { fetchWeatherData } from "@/redux/features/weatherSlice";
 import WeatherSection from "./weather-section";
 import { fetchCryptoData } from "@/redux/features/cryptoSlice";
-import { setupWebSocket, closeWebSocket } from "@/redux/features/websocketSlice";
+import { fetchNewsData } from "@/redux/features/newsSlice";
+import {
+  setupWebSocket,
+  closeWebSocket,
+} from "@/redux/features/websocketSlice";
 import CryptoSection from "./crypto-section";
+import NewsSection from "./news-section";
 
 export default function DashboardTabs() {
   const dispatch = useAppDispatch();
@@ -16,6 +21,7 @@ export default function DashboardTabs() {
     // Initial data fetch
     dispatch(fetchWeatherData());
     dispatch(fetchCryptoData());
+    dispatch(fetchNewsData());
 
     // Setup WebSocket connection
     dispatch(setupWebSocket());
@@ -24,6 +30,7 @@ export default function DashboardTabs() {
     const intervalId = setInterval(() => {
       dispatch(fetchWeatherData());
       dispatch(fetchCryptoData());
+      dispatch(fetchNewsData());
     }, 60000);
 
     return () => {
@@ -52,7 +59,9 @@ export default function DashboardTabs() {
       <TabsContent value="crypto">
         <CryptoSection />
       </TabsContent>
-      <TabsContent value="news">{/* <NewsSection /> */}</TabsContent>
+      <TabsContent value="news">
+        <NewsSection />
+      </TabsContent>
     </Tabs>
   );
 }
