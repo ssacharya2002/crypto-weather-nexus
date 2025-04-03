@@ -8,6 +8,7 @@ import Link from "next/link"
 import { toggleFavoriteCrypto } from "@/redux/features/userPreferencesSlice"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { formatCurrency } from "@/lib/utils"
+import { CryptoCardsSkeleton } from "./crypto-skeleton"
 
 export default function CryptoSection() {
   const { data, loading, error } = useAppSelector((state) => state.crypto)
@@ -15,7 +16,7 @@ export default function CryptoSection() {
   const dispatch = useAppDispatch()
 
   if (loading) {
-    return <div className="text-center py-8">Loading cryptocurrency data...</div>
+    return <CryptoCardsSkeleton />
   }
 
   if (error) {
