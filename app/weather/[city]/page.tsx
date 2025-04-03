@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 
-export default function CityPage({ params }: { params: { city: string } }) {
-  const cityName = decodeURIComponent(params.city)
+export default async function CityPage({ params }: { params: Promise<{ city: string }> }) {
+  const cityName = (await params).city
 
   return (
     <div className="space-y-6">
