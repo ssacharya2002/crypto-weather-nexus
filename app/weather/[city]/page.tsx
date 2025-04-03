@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react"
 
 export default async function CityPage({ params }: { params: Promise<{ city: string }> }) {
   const cityName = (await params).city
+  const decodedCity  = decodeURIComponent(cityName)
 
   return (
     <div className="space-y-6">
@@ -16,11 +17,11 @@ export default async function CityPage({ params }: { params: Promise<{ city: str
             <ArrowLeft className="h-4 w-4" />
           </Link>
         </Button>
-        <h1 className="text-3xl font-bold tracking-tight">{cityName} Weather</h1>
+        <h1 className="text-3xl font-bold tracking-tight">{decodedCity } Weather</h1>
       </div>
 
       <Suspense fallback={<WeatherDetailsSkeleton />}>
-        <CityWeatherDetails city={cityName} />
+        <CityWeatherDetails city={decodedCity } />
       </Suspense>
     </div>
   )
