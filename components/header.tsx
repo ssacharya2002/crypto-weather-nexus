@@ -1,5 +1,6 @@
-import { ModeToggle } from "@/components/mode-toggle"
-import Link from "next/link"
+import { ModeToggle } from "@/components/mode-toggle";
+import Link from "next/link";
+import NotificationsPopover from "./notifications-popover";
 
 export default function Header() {
   return (
@@ -9,10 +10,10 @@ export default function Header() {
           <span className="text-xl font-bold">CryptoWeather Nexus</span>
         </Link>
         <div className="flex items-center gap-2">
+          <NotificationsPopover />
           <ModeToggle />
         </div>
       </div>
     </header>
-  )
+  );
 }
-

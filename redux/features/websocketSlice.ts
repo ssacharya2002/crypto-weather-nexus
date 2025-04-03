@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import type { AppDispatch } from "../store"
 import { updateCryptoPrice } from "./cryptoSlice"
+import { addNotification } from "./notificationsSlice"
 
 // Types
 interface WebSocketState {
@@ -19,6 +20,7 @@ const API_KEY = process.env.NEXT_PUBLIC_COINCAP_API_KEY
 // WebSocket instance reference
 let wsInstance: WebSocket | null = null
 let reconnectTimeout: NodeJS.Timeout | null = null
+let weatherAlertInterval: NodeJS.Timeout | null = null
 
 // Initial state
 const initialState: WebSocketState = {
@@ -42,6 +44,10 @@ const cleanupWebSocket = () => {
   if (reconnectTimeout) {
     clearTimeout(reconnectTimeout)
     reconnectTimeout = null
+  }
+  if (weatherAlertInterval) {
+    clearInterval(weatherAlertInterval)
+    weatherAlertInterval = null
   }
 }
 
@@ -89,6 +95,32 @@ export const setupWebSocket = createAsyncThunk<void, void, { dispatch: AppDispat
         }
         dispatch(setConnected(true))
         dispatch(resetReconnectAttempts())
+
+        // Start weather alerts when connection is established
+        //simulated weather alerts 
+        weatherAlertInterval = setInterval(() => {
+          if (Math.random() > 0.7) {
+            // 30% chance of weather alert
+            const cities = ["New York", "London", "Tokyo"]
+            const city = cities[Math.floor(Math.random() * cities.length)]
+            const alerts = [
+              "Heavy rain expected",
+              "High winds warning",
+              "Extreme heat alert",
+              "Thunderstorm warning",
+              "Flash flood warning",
+            ]
+            const alert = alerts[Math.floor(Math.random() * alerts.length)]
+
+            dispatch(
+              addNotification({
+                type: "weather_alert",
+                title: `Weather Alert: ${city}`,
+                message: `${alert} in ${city}. Take necessary precautions.`,
+              })
+            )
+          }
+        }, 1500)
       }
       
       wsInstance.onmessage = (event) => {
@@ -100,8 +132,26 @@ export const setupWebSocket = createAsyncThunk<void, void, { dispatch: AppDispat
             const newPrice = parseFloat(price as string)
             if (!isNaN(newPrice)) {
               dispatch(updateCryptoPrice({ id: cryptoId, price: newPrice }))
+              //simulated price alerts 
+              if (Math.random() > 0.85) { // Reduce frequency of notifications
+                const percentChange = (Math.random() * 5) - 2.5; // Random change between -2.5% and +2.5%
+                const direction = percentChange > 0 ? "up" : "down";
+                const changePercent = Math.abs(percentChange);
+                
+                if (changePercent > 1) {
+                  dispatch(
+                    addNotification({
+                      type: "price_alert",
+                      title: `${cryptoId.charAt(0).toUpperCase() + cryptoId.slice(1)} price ${direction}!`,
+                      message: `${cryptoId.charAt(0).toUpperCase() + cryptoId.slice(1)} price has moved ${direction} by ${changePercent.toFixed(2)}% to $${newPrice.toFixed(2)}`,
+                    })
+                  );
+                }
+              }
             }
           })
+
+          
         } catch (error) {
           console.error("Error processing WebSocket message:", error)
           dispatch(setError("Error processing price update"))

@@ -4,6 +4,7 @@ import cryptoReducer from "./features/cryptoSlice"
 import newsReducer from "./features/newsSlice"
 import userPreferencesReducer from "./features/userPreferencesSlice"
 import websocketReducer from "./features/websocketSlice"
+import notificationsReducer from "./features/notificationsSlice"
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     news: newsReducer,
     userPreferences: userPreferencesReducer,
     websocket: websocketReducer,
+    notifications: notificationsReducer,
   },
 })
 
