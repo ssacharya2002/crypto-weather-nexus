@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CryptoWeather Nexus
 
-## Getting Started
+A multi-page dashboard combining real-time weather data, cryptocurrency information, and WebSocket notifications.
 
-First, run the development server:
+## Demo
+
+[Live Demo](https://crypto-weather-nexus-five.vercel.app/)
+
+## Features
+
+- **Weather Dashboard:** Display of current conditions for multiple cities with temperature, humidity, and forecast
+- **Cryptocurrency Tracking:** Real-time price updates via WebSocket for Bitcoin, Ethereum, and more
+- **News Feed:** Latest crypto news headlines
+- **User Preferences:** Favorite cities and cryptocurrencies with persistent storage
+- **Real-Time Notifications:** WebSocket alerts for significant price changes and weather events
+- **Detailed Views:** In-depth pages for both weather locations and cryptocurrencies
+
+## Tech Stack
+
+- **Framework:** Next.js 13+ with file-based routing
+- **State Management:** Redux with Thunk middleware
+- **Styling:** Tailwind CSS, shadcn UI library
+- **Real-Time Data:** WebSocket integration with CoinCap API
+- **External APIs:**
+  - Weather: OpenWeatherMap
+  - Crypto: CoinGecko/CoinCap
+  - News: NewsData.io
+
+## Installation
 
 ```bash
+# Clone repository
+git clone https://github.com/ssacharya2002/crypto-weather-nexus
+
+# Install dependencies
+cd crypto-weather-nexus
+npm install
+
+# Set up environment variables
+# create .env file and add your API keys
+NEWSDATA_API_KEY=
+OPENWEATHER_API_KEY=
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Design Decisions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **File-based Routing:** Leveraged Next.js for optimized navigation and page transitions
+- **API routes:** Utilized Next.js API routes for efficient data fetching and protecting API keys
+- **Data Refresh Strategy:** 60-second intervals for API data with fallback UI for partial failures
+- **WebSocket Implementation:** Direct connection to CoinCap for real-time price data
+- **State Management:** Centralized Redux store for global state and user preferences
+- **Responsive Approach:** Mobile-first design with Tailwind breakpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Challenges and Solutions
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **API Rate Limiting:** Implemented caching strategies to avoid exceeding free tier limits
+- **WebSocket Reliability:** Added reconnection logic and status indicators
